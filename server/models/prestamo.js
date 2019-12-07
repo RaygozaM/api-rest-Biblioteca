@@ -2,12 +2,10 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const Libro = require('./libro');
 const Usuario = require('./usuario');
-let date = new Date();
+
 
 let Schema = mongoose.Schema;
-let day = date.getDate();
-let month = date.getMonth() + 1;
-let year = date.getFullYear();
+
 let prestamoSchema = new Schema({
     usuario: {
         type: Schema.Types.ObjectId,
@@ -22,7 +20,7 @@ let prestamoSchema = new Schema({
     },
     fechaSalida: {
         type: Date,
-        default: (`${day}-${month}-${year}`)
+        default: Date.now()
     },
     estado: {
         type: Boolean,

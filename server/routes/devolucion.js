@@ -13,11 +13,12 @@ app.post('/devolucion', /*[verificaToken],*/ (req, res) =>{
     let idPrestamo = req.body.idPrestamo;
     let devolucion = new Devolucion({
         usuario: body.usuario,
-        libro: body.libro
+        libro: body.libro,
+        idPrestamo: body.idPrestamo
     });
     devolucion.save((prestamoDB) => {
-        Libro.findByIdAndUpdate(id, { estado: true }, { new: true, runValidators: true, context: 'query' }, (respLibro) => {
-            Prestamo.deleteOne({_id: idPrestamo }, (err, respPrestamo) =>{
+        Prestamo.deleteOne({_id: idPrestamo }, (err, respPrestamo) =>{
+            Libro.findByIdAndUpdate(id, { estado: true }, { new: true, runValidators: true, context: 'query' }, (respLibro) => {
                 if(err){
                     return res.status(400).json({
                         ok: false,
@@ -27,8 +28,8 @@ app.post('/devolucion', /*[verificaToken],*/ (req, res) =>{
                 return res.status(200).json({
                     ok: true,
                     prestamoDB,
-                    respLibro,
-                    respPrestamo
+                    respPrestamo,
+                    respLibro
                 });
             });
         }); 

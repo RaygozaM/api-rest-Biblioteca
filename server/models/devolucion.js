@@ -20,7 +20,7 @@ let devolucionSchema = new Schema({
     idPrestamo: {
         type: Schema.Types.ObjectId,
         ref: 'Prestamo',
-        //required: [true, 'Por favor ingresa el ID del prestamo']
+        required: [true, 'Por favor ingresa el ID del prestamo']
     },
     fechaDevolucion: {
         type: Date,
