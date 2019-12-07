@@ -1,0 +1,23 @@
+{
+  "name": "10-proyecto-biblioteca",
+  "version": "1.0.0",
+  "description": "Proyecto Ultima Unidad",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.12",
+    "mongoose-unique-validator": "^2.0.3",
+    "python": "0.0.4",
+    "underscore": "^1.9.1"
+  }
+}
