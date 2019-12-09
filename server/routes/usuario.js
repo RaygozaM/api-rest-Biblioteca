@@ -6,7 +6,7 @@ const {verificaToken} = require('../middlewares/autenticacion')
 
 const Usuario = require('../models/usuario');
 
-app.get('/usuario/:desde/:limite', /*[verificaToken],*/ (req, res) =>{
+app.get('/usuario/:desde/:limite', [verificaToken], (req, res) =>{
     let desde = req.params.desde || 0;
     let limite = req.params.limite || 5;
     desde = Number(desde);
@@ -30,7 +30,7 @@ app.get('/usuario/:desde/:limite', /*[verificaToken],*/ (req, res) =>{
     });
 });
 
-app.post('/usuario', /*[verificaToken],*/ (req, res) =>{
+app.post('/usuario', [verificaToken], (req, res) =>{
     let body = req.body;
 
     let usuario = new Usuario({
@@ -54,7 +54,7 @@ app.post('/usuario', /*[verificaToken],*/ (req, res) =>{
     });
 });
 
-app.put('/usuario/:id', (req, res) =>{
+app.put('/usuario/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'estado', 'role', 'img']);
     
@@ -73,7 +73,7 @@ app.put('/usuario/:id', (req, res) =>{
     });
 });
 
-app.delete('/usuario/:id', (req, res) =>{
+app.delete('/usuario/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
 
     Usuario.findByIdAndUpdate(id, { estado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {

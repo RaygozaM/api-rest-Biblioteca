@@ -6,7 +6,7 @@ const {verificaToken} = require('../middlewares/autenticacion')
 const Prestamo = require('../models/prestamo');
 const Libro = require('../models/libro');
 
-app.get('/prestamo/noRentados/:desde/:limite', /*[verificaToken],*/ (req, res) =>{
+app.get('/prestamo/noRentados/:desde/:limite', [verificaToken], (req, res) =>{
     let desde = req.params.desde || 0;
     let limite = req.params.limite || 5;
     desde = Number(desde);
@@ -30,7 +30,7 @@ app.get('/prestamo/noRentados/:desde/:limite', /*[verificaToken],*/ (req, res) =
     });
 });
 
-app.get('/prestamo/rentados/:desde/:limite', /*[verificaToken],*/ (req, res) =>{
+app.get('/prestamo/rentados/:desde/:limite', [verificaToken], (req, res) =>{
     let desde = req.params.desde || 0;
     let limite = req.params.limite || 5;
     desde = Number(desde);
@@ -81,7 +81,7 @@ app.post('/prestamo', /*[verificaToken],*/ (req, res) =>{
 });
 
 
-app.put('/prestamo/:id', (req, res) =>{
+app.put('/prestamo/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'estado', 'categoria', 'img', 'ubicacion', 'precio']);
     
@@ -100,7 +100,7 @@ app.put('/prestamo/:id', (req, res) =>{
     });
 });
 
-app.delete('/prestamo/:id', (req, res) =>{
+app.delete('/prestamo/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
 
     Prestamo.findByIdAndUpdate(id, { estado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {

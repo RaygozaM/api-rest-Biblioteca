@@ -7,10 +7,11 @@ const app = express();
 
 const Usuario = require('../models/usuario');
 const Libro = require('../models/libro');
+const {verificaToken} = require('../middlewares/autenticacion')
 
 app.use(fileUpload());
 
-app.put('/upload/:ruta/:id', (req, res) => {
+app.put('/upload/:ruta/:id', [verificaToken], (req, res) => {
     let id = req.params.id;
     let ruta = req.params.ruta;
     let archivo = req.files.archivo;

@@ -7,7 +7,7 @@ const Devolucion = require('../models/devolucion');
 const Libro = require('../models/libro');
 const Prestamo = require('../models/prestamo');
 
-app.post('/devolucion', /*[verificaToken],*/ (req, res) =>{
+app.post('/devolucion', [verificaToken], (req, res) =>{
     let body = req.body;
     let id = req.body.libro;
     let idPrestamo = req.body.idPrestamo;
