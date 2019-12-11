@@ -6,15 +6,9 @@ const {verificaToken} = require('../middlewares/autenticacion')
 const Prestamo = require('../models/prestamo');
 const Libro = require('../models/libro');
 
-app.get('/prestamo/noRentados/:desde/:limite', [verificaToken], (req, res) =>{
-    let desde = req.params.desde || 0;
-    let limite = req.params.limite || 5;
-    desde = Number(desde);
-    limite = Number(limite);
+app.get('/prestamo/noRentados', [verificaToken], (req, res) =>{
     Libro.find({ estado: true })
-    .skip(desde)
-    .limit(limite)
-    .exec((err, prestamo) =>{
+    .exec((err, libros) =>{
         if(err){
             return res.status(400).json({
                 ok: false,
@@ -23,21 +17,33 @@ app.get('/prestamo/noRentados/:desde/:limite', [verificaToken], (req, res) =>{
         }else{
             return res.status(200).json({
                 ok: true,
-                count: prestamo.length,
-                prestamo
+                count: libros.length,
+                libros
             });
         }
     });
 });
 
-app.get('/prestamo/rentados/:desde/:limite', [verificaToken], (req, res) =>{
-    let desde = req.params.desde || 0;
-    let limite = req.params.limite || 5;
-    desde = Number(desde);
-    limite = Number(limite);
+app.get('/prestamo', [verificaToken], (req, res) =>{
+    Prestamo.find({ estado: true })
+    .exec((err, prestamos) =>{
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }else{
+            return res.status(200).json({
+                ok: true,
+                count: prestamos.length,
+                prestamos
+            });
+        }
+    });
+});
+
+app.get('/prestamo/rentados', [verificaToken], (req, res) =>{
     Libro.find({ estado: false })
-    .skip(desde)
-    .limit(limite)
     .exec((err, libros) =>{
         if(err){
             return res.status(400).json({

@@ -6,14 +6,8 @@ const {verificaToken} = require('../middlewares/autenticacion')
 
 const Usuario = require('../models/usuario');
 
-app.get('/usuario/:desde/:limite', [verificaToken], (req, res) =>{
-    let desde = req.params.desde || 0;
-    let limite = req.params.limite || 5;
-    desde = Number(desde);
-    limite = Number(limite);
+app.get('/usuario', [verificaToken], (req, res) =>{
     Usuario.find({ estado: true })
-    .skip(desde)
-    .limit(limite)
     .exec((err, usuarios) =>{
         if(err){
             return res.status(400).json({
@@ -56,7 +50,7 @@ app.post('/usuario', [verificaToken], (req, res) =>{
 
 app.put('/usuario/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'estado', 'role', 'img']);
+    let body = _.pick(req.body, ['nombre', 'estado', 'img']);
     
     Usuario.findByIdAndUpdate(id, body, {new: true, runValidators: true, context:'query'}, (err, usrDB) =>{
         if(err){

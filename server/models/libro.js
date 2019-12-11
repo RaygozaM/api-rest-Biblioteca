@@ -27,6 +27,10 @@ let libroSchema = new Schema({
         type: Boolean,
         default: true
     },
+    disponible:{
+        type: Boolean,
+        default: true
+    },
     img:{
         type: String,
         //required: [true, 'Por favor inserta una imagen']

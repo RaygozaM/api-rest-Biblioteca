@@ -5,14 +5,8 @@ const {verificaToken} = require('../middlewares/autenticacion')
 
 const Libro = require('../models/libro');
 
-app.get('/libro/:desde/:limite', [verificaToken], (req, res) =>{
-    let desde = req.params.desde || 0;
-    let limite = req.params.limite || 5;
-    desde = Number(desde);
-    limite = Number(limite);
-    Libro.find({ estado: true })
-    .skip(desde)
-    .limit(limite)
+app.get('/libro', [verificaToken], (req, res) =>{
+    Libro.find()
     .exec((err, libros) =>{
         if(err){
             return res.status(400).json({
@@ -56,7 +50,7 @@ app.post('/libro', [verificaToken], (req, res) =>{
 
 app.put('/libro/:id', [verificaToken], (req, res) =>{
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'estado', 'categoria', 'img', 'ubicacion', 'precio']);
+    let body = _.pick(req.body, ['nombre', 'disponible', 'categoria', 'img', 'ubicacion', 'precio']);
     
     Libro.findByIdAndUpdate(id, body, {new: true, runValidators: true, context:'query'}, (err, libroDB) =>{
         if(err){
@@ -76,7 +70,7 @@ app.put('/libro/:id', [verificaToken], (req, res) =>{
 app.delete('/libro/:id', [verificaToken],(req, res) =>{
     let id = req.params.id;
 
-    Libro.findByIdAndUpdate(id, { estado: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    Libro.findByIdAndUpdate(id, { disponible: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if(err){
             return res.status(400).json({
                 ok: false,

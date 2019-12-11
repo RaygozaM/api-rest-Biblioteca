@@ -36,5 +36,22 @@ app.post('/devolucion', [verificaToken], (req, res) =>{
     });
 });
 
+app.get('/devolucion', [verificaToken], (req, res) =>{
+    Devolucion.find({ estado: true })
+    .exec((err, devolucions) =>{
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }else{
+            return res.status(200).json({
+                ok: true,
+                count: devolucions.length,
+                devolucions
+            });
+        }
+    });
+});
 
 module.exports = app;

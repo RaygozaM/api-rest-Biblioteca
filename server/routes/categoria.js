@@ -4,7 +4,7 @@ const _ = require('underscore');
 const Categoria = require('../models/categoria');
 const {verificaToken} = require('../middlewares/autenticacion')
 
-app.post('/categoria', /*[verificaToken],*/ (req, res)=>{
+app.post('/categoria', [verificaToken], (req, res)=>{
     let body = req.body;
     
     let categoria = new Categoria({
