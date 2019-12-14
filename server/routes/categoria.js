@@ -26,6 +26,23 @@ app.post('/categoria', [verificaToken], (req, res)=>{
 });
 
 app.get('/categoria', [verificaToken], (req, res) => {
+    Categoria.find({estado: true})
+        .exec((err, categorias) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+            return res.status(200).json({
+                ok: true,
+                count: categorias.length,
+                categorias
+            })
+        });
+});
+
+app.get('/categoria/todo', [verificaToken], (req, res) => {
     Categoria.find()
         .exec((err, categorias) => {
             if (err) {

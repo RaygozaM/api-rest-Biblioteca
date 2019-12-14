@@ -23,6 +23,61 @@ app.get('/libro', [verificaToken], (req, res) =>{
     });
 });
 
+app.get('/libro/disponible', [verificaToken], (req, res) =>{
+    Libro.find({estado: true})
+    .exec((err, libros) =>{
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }else{
+            return res.status(200).json({
+                ok: true,
+                count: libros.length,
+                libros
+            });
+        }
+    });
+});
+
+app.get('/libro/noDisponible', [verificaToken], (req, res) =>{
+    Libro.find({estado: false})
+    .exec((err, libros) =>{
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }else{
+            return res.status(200).json({
+                ok: true,
+                count: libros.length,
+                libros
+            });
+        }
+    });
+});
+
+app.get('/libro/eliminado', [verificaToken], (req, res) =>{
+    Libro.find({disponible: true})
+    .exec((err, libros) =>{
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }else{
+            return res.status(200).json({
+                ok: true,
+                count: libros.length,
+                libros
+            });
+        }
+    });
+});
+
+
 app.post('/libro', [verificaToken], (req, res) =>{
     let body = req.body;
 
