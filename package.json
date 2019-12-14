@@ -4,8 +4,11 @@
   "description": "Proyecto Ultima Unidad",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "10.16.3"
   },
   "author": "",
   "license": "ISC",
